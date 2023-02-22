@@ -1,0 +1,87 @@
+#preview {
+    list-style-type: none;
+    width: 100%;
+}
+
+#preview button {
+    color: white;
+    text-decoration: none;
+    background-color: unset;
+    border: unset;
+    font-size: large;
+}
+
+#preview .button:hover {
+    color: #FA9549;
+}
+
+#preview th, td {
+    padding: 8px 0px;
+    padding-top: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+#subtable {
+    list-style-type: none;
+    width: 100%;
+}
+
+#subtable th,td{
+    padding: 8px 0px;
+    padding-top: 8px;
+}
+
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    /*padding: 18px;*/
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    /*font-size: 15px;*/
+}
+  
+.active {
+    border-bottom: 1px solid #FA9549 !important;
+    padding-bottom: 12px;
+}
+  
+.content-col {
+    padding: 0 8px;
+    padding-bottom: 4px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    justify-items: center;
+    margin: 0 auto;
+}
+
+.img-list {
+    list-style-type: none;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.img-list li {
+    float: left;
+    margin: 10px;
+}
+
+.img {
+    display: inline-block;
+    height: 100%;
+    max-height: 105px;
+    border: 1px solid#FFFFFF99;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.img:hover {
+    border: 1px solid #FA9549;
+    transform: translate(0px, -8px);
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

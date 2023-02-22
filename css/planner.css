@@ -1,0 +1,249 @@
+body {
+    overflow: hidden;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/*Elements of the Left-Sidebar*/
+
+#left-sidebar {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    width: 200px;
+
+    padding: 0px 20px;
+    height: calc(100% - 86.5px);
+    z-index: 1;
+    
+    font-size: larger;
+}
+/*list of categories*/
+#item-menu {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    overflow: hidden;
+}
+#item-menu li {
+    margin-bottom: 5px;
+}
+#item-menu li:hover {
+    color: #FA9549;
+    cursor: pointer;
+}
+#item-menu i {
+    color: #FA9549;
+    margin-right: 3px;
+    display: inline-block;
+}
+.icon-down {
+    rotate: 90deg;
+    transition: 0.2s;
+}
+.icon-right {
+    rotate: 0deg;
+    transition: 0.2s;
+}
+
+/*Sublist of each categorie*/
+#item-menu .items {
+    list-style-type: none;
+    font-size: 1.1rem;
+}
+
+#item-menu .item {
+    margin-bottom: 7px;
+    margin-left: 7px;
+    display: flex;
+    align-items: center;
+}
+.machine-icon {
+    width: 30px;
+    margin-right: 3px;
+}
+
+/*Copy and Paste row*/
+#copy-paste {
+    display: flex;
+    border-bottom: #FA9549 solid 1px;
+    margin-bottom: 10px;
+    z-index: 2;
+    background-color: inherit;
+}
+#copy-paste li {
+    width: 50%;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+#copy-paste li i {
+    color: #FA9549;
+    margin-right: 8px;
+}
+
+/*Operational line*/
+#operations {
+    display: flex;
+    gap: 10px;
+}
+#operations li i {
+    font-size: 25px;
+    padding: 3px;
+    cursor: pointer;
+}
+#operations li i:hover {
+    /*color: #C89549;
+    opacity: 2;*/
+    color: #FA9549;
+}
+.bordered {
+    border: #FA9549 solid 1px;
+    border-radius: 5px;
+}
+.operating {
+    color: #FA9549;
+}
+/*Operators and copy and paste*/
+#tool-line {
+    position: absolute;
+    bottom: 24px;
+}
+
+/*Propertie Window*/
+#properties {
+    position: absolute;
+    right: 12px;
+    top: 73.5px;
+    left: auto;    
+}
+#p-head {
+    padding: 15px;
+
+    font-size: 1.6rem;
+    text-align: center;
+    color: #FA9549;
+}
+#p-list {
+    padding: 20px;
+    padding-right: 0;
+    font-size: 1.2rem;
+}
+#p-list ul {
+    background-color: inherit;
+}
+#p-list li {
+    border: #FA9549 solid 1px;
+    border-right: none;
+    padding: 7px 20px;
+    margin-top: -1px;
+}
+    /*Inputfields*/
+    #properties input[type=color] {
+        border-radius: 10px;
+        height: 20px;
+        padding: 0;
+        width: 55px;
+        border: white solid 1px;
+        outline: none;
+        float: right;
+    }
+    
+    #properties input[type=color]::-webkit-color-swatch-wrapper {
+        padding: 0; 
+    }
+    #properties input[type=color]::-webkit-color-swatch {
+        border: none;
+        border-radius: 10px;
+    }
+
+    #properties input[type=text] {
+        font-size: 1.1rem;
+        background-color: inherit;
+        border-style: none;
+        outline: none;
+        display: inline-block;
+        padding: 0;
+        min-width: 20px;
+        max-width: 29px;
+        width: min-content;
+        color: white;
+        size: 3;
+        /*background-color: blue;*/
+    }
+    #properites input[type=text]:focus {
+        border-style: none;
+        outline: none;
+    }
+
+    #properties input[type=range] {
+        /*-webkit-appearance: none;*/
+        width: 50%;
+        height: 3px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+        transform: translateY(-5px);
+    }
+    #properties input[type=range]:hover {
+        opacity: 1;
+    } 
+    #properties input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #FA9549;
+        cursor: pointer;
+    }
+    #properties input[type=range]::-moz-range-thumb {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #FA9549;
+        cursor: pointer;
+    }
+    
+    #properties select {
+        font-size: 1.1rem;
+        float: right;
+        color: white;
+    }
+
+
+/**/
+
+/*Indicator at the right bottom corner*/
+#indicator {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
+#indicator ul {
+    list-style-type: none;
+    margin: 20px;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+#indicator li {
+    margin: 0;
+    padding: 0;
+}
+#indicator i {
+    color: #FA9549;
+    margin-right: 5px;
+}
+
+
+/*general classes*/
+.hidden {
+    display: none !important;
+}

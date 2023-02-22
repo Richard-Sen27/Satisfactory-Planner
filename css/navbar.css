@@ -1,0 +1,156 @@
+       /* (B) HORIZONTAL MENU ITEMS */
+       #nav-items { 
+        display: flex;
+        padding: 5px 20px;
+    }
+
+    #navbar a {
+        float: left;
+    }
+
+    #navbar button {
+        background-color: transparent;
+        border: none;
+    }
+    
+    /*Dropdown*/
+    /**********/
+    .nav-link {
+        margin-left: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        color: #FFFFFF99;
+        font-size: 18px;
+        text-decoration: none;
+        overflow: hidden;
+    }
+    .drop-link {
+        padding: 3px 0px;
+        color: #FFFFFF99;
+        font-size: 18px;
+        text-decoration: none;
+    }    
+    .dropbtn {
+        float: left;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background-color: inherit;            
+        z-index: 2;
+    }
+
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        .dropdown-content {
+            display: none;
+            position: fixed;
+            translate: 250px 50px;
+            background-color: #303030ee; /**/
+            min-width: 120px;
+            padding: 20px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            float: none !important;
+            display: block;
+            text-align: left;
+        }
+
+        .show {
+            display: block;
+        }
+
+        button i {
+            margin: 0px;
+            padding: 0px;
+        }
+    /*Dropdown end*/
+
+
+
+    #nav-items .nav-link:hover, .drop-link:hover{
+        color: white !important;
+        /*transition: 0.5s ;*/
+    }
+
+    /* (C) HIDE HAMBURGER */
+    #navbar label, #hamburger { display: none; }
+
+    /* [ON SMALL SCREENS] */
+    @media screen and (max-width: 830px){
+        /* (A) BREAK INTO VERTICAL MENU */
+        #nav-items .nav-link, .drop-link {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            /*padding: 10px 0px;*/
+            /*border-bottom: 1px solid white;*/
+        }
+
+        #nav-items button {
+            text-align: left;
+            padding: 0px;
+        }
+        
+        /* (B) SHOW HAMBURGER ICON */
+        #navbar label { 
+            display: inline;
+            float: right;
+            translate: 0px -7px;
+            color: white;
+            background: #FA9549;
+            font-style: normal;
+            font-size: 1.2em;
+            padding: 17px;
+            overflow: hidden;
+        }
+
+        /* (C) TOGGLE SHOW/HIDE MENU */
+        #nav-items { display: none; }
+        #navbar input:checked ~ #nav-items {
+            position: absolute;
+            padding: 0px;
+            padding: 15px 0;
+            width: 100%;
+            top: 60.5px;
+            background-color: rgba(20, 20, 20, 0.90);
+            display: block; 
+            z-index: 100;
+        }
+
+        .dropdown-content {
+            translate: 50px 0px;
+            pointer-events: none;
+            position: relative;
+            background-color: transparent;
+            box-shadow: none;
+            padding: 0px;
+        }
+
+        .dropdown-content a {
+            pointer-events: all;
+            display: flex;
+            text-align: left;
+        }
+
+    /* Necessary for the dropdown in the nav for the links    
+        /*Change Dropdown appereance/
+        .link-dropdown-content {
+            background-color: rgba(20, 20, 20, 0.90);
+            padding-left: 30px;
+            width: 100%;
+            translate: -10px 5px;
+            z-index: 0;
+        }
+        .link-dropdown {
+            display: block;
+            height: 18px;
+        }*/
+        
+    }
+
+/*Nav end*/

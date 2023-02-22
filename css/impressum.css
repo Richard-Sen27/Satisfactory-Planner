@@ -1,0 +1,19 @@
+td {
+    /*width: 25%;*/
+    padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+}
+tr {
+    width: 100%;
+}
+table {
+    width: 50%;
+    margin: 0px;
+    border-collapse: collapse;
+}
+@media screen and(max-width: 1347px) {
+    table {
+        width: 100%;
+        margin: 0px;    
+    }
+}
