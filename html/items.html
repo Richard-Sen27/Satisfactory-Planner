@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items - Satisfactory Planner</title>
+    <link rel="icon" type="image/x-icon" href="../img/icon.png">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/items.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="../js/navbar.js"></script>
+</head>
+<body onload="loadAll()">
+  <nav id="navbar"></nav>
+
+    <div class="content">
+            <div class="content-light content-header satisFont">
+                Item List
+            </div>
+            <div class="content-regular content-body">
+                    <table id="preview">
+                        <tr><td>
+                            <button class="button collapsible">Raw Resources</button>
+                            <div class="content-col">
+                              <ul class="img-list">
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/bauxite.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/caterium_ore.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/coal.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/compacted_coal.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/petroleum_coke.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/copper_ore.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/iron_ore.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/limestone.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/mycelia.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/quarz.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/sam_ore.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/sulfur.webp" alt="resource"></li>
+                                <li><img class="img" src="../img/game_elemnts/raw_resources/uranium.webp" alt="resource"></li>
+                              </ul>
+                            </div>
+                        </td></tr>
+                        <tr><td>
+                            <button class="button collapsible">Ingots</button>
+                            <div class="content-col">
+                              <ul class="img-list">
+                                <li><img class="img" src="../img/game_elemnts/ingots/aluminium_ingot.webp" alt="ingot"></li>
+                                <li><img class="img" src="../img/game_elemnts/ingots/caterium_ingot.webp" alt="ingot"></li>
+                                <li><img class="img" src="../img/game_elemnts/ingots/copper_ingot.webp" alt="ingot"></li>
+                                <li><img class="img" src="../img/game_elemnts/ingots/sam_ingot.webp" alt="ingot"></li>
+                                <li><img class="img" src="../img/game_elemnts/ingots/steel_ingot.webp" alt="ingot"></li>
+                              </ul>
+                            </div>
+                        </td></tr>
+                        <tr><td>
+                            <button class="button collapsible">Fluids</button>
+                            <div class="content-col">
+                              <ul class="img-list">
+                                <li><img class="img" src="../img/game_elemnts/fluids/alumina_solution.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/crude_oil.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/fuel.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/heavy_oil_residue.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/liquid_biofuel.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/nitric_acid.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/nitrogen_gas.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/sulfuric_acid.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/turbofuel.webp" alt="fluid"></li>
+                                <li><img class="img" src="../img/game_elemnts/fluids/water.webp" alt="fluid"></li>
+                              </ul>
+                            </div>
+                        </td></tr>
+                        <tr><td>
+                            <button class="button collapsible">Nature Loot</button>
+                            <div class="content-col">
+                              <ul class="img-list">
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/alien_dna_capsule.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/alien_protein.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/bacon_agaric.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/beryl_nut.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/blue_power_slug.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/flower_petals.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/green_power_slug.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/hatcher_remains.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/hog_remains.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/leaves.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/mercer_sphere.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/paleberry.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/plasma_spitter_remains.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/purple_power_slug.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/somersloop.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/stinger_remains.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/vines.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/wood.webp" alt="nature loot"></li>
+                                <li><img class="img" src="../img/game_elemnts/nature_loot/yellow_power_slug.webp" alt="nature loot"></li>
+                              </ul>
+                            </div>
+                        </td></tr>
+                        <tr><td>
+                            <button class="button collapsible">Equipment</button>
+                            <div class="content-col">
+                              <ul class="img-list">
+                                <li><img class="img" src="../img/game_elemnts/equipment/beacon.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/blade_runners.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/boom_box.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/build_gun.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/chainsaw.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/cluster_nobelisk.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/color_cartridge.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/color_gun.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/cup1.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/cup2.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/gas_filter.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/gas_mask.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/hover_pack.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/iodine_infused_filter.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/jetpack.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/medical_inhaler.webp" alt="equipment"></li>
+                                
+                                <li><img class="img" src="../img/game_elemnts/equipment/nobelisk_detonator.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/nobelisk.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/nuke_nobelisk.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/pulse_nobelisk.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/gas_nobelisk.webp" alt="equipment"></li>
+
+                                <li><img class="img" src="../img/game_elemnts/equipment/parachute.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/portable_miner.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/power_shard.webp" alt="equipment"></li>
+                                <li><img class="img" src="../img/game_elemnts/equipment/zipline.webp" alt="equipment"></li>
+                              </ul>
+                            </div>
+                        </td></tr>
+                        <tr><td>
+                            <button class="button collapsible">Weapons</button>
+                            <div class="content-col">
+                              <ul class="img-list">
+                                <li><img class="img" src="../img/game_elemnts/weapons/xeno_zapper.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/xeno_basher.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/rebar_gun.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/iron_rebar.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/explosive_rebar.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/stun_rebar.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/shatter_rebar.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/rifle.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/homing_rifle_ammo.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/rifle_ammo.webp" alt="weapon"></li>
+                                <li><img class="img" src="../img/game_elemnts/weapons/turbo_rifle_ammo.webp" alt="weapon"></li>
+                              </ul>
+                            </div>
+                        </td></tr>
+                        
+                        <tr><td>
+                          <button class="button collapsible">Aluminium Parts</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/aluminium_parts/alclad_aluminum_sheet.webp" alt="aluminium_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/aluminium_parts/aluminum_casing.webp" alt="aluminium_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/aluminium_parts/aluminum_scrap.webp" alt="aluminium_part"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                        <tr><td>
+                          <button class="button collapsible">Biomass</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/biomass/biomass.webp" alt="biomass"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/biomass/solid_biofuel.webp" alt="biomass"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                        <tr><td>
+                          <button class="button collapsible">Copper / Caterium Parts</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/copper-caterium_parts/cable.webp" alt="copeer-caterium"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/copper-caterium_parts/copper_sheet.webp" alt="copeer-caterium"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/copper-caterium_parts/wire.webp" alt="copeer-caterium"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/copper-caterium_parts/quickwire.webp" alt="copeer-caterium"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                        <tr><td>
+                          <button class="button collapsible">Electrical Parts</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/adaptive_control_unit.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/ai_limiter.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/assembly_director_system.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/automated_wiring.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/battery.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/circuit_board.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/computer.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/cooling_system.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/crystal_oscillator.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/heat_sink.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/high-speed_connector.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/magnetic_field_generator.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/modular_engine.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/motor.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/quantum_computer.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/radio_control_unit.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/rotor.webp " alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/smart_plating.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/stator.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/supercomputer.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/superposition_oscillator.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/thermal_propulsion_rocket.webp" alt="electrical"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/electrical/turbo_motor.webp" alt="electrical"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                        <tr><td>
+                          <button class="button collapsible">Iron Parts</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/iron_plate.webp" alt="iron_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/iron_rod.webp" alt="iron_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/reinforced_iron_plate.webp" alt="iron_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/screw.webp" alt="iron_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/modular_frame.webp" alt="iron_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/modular_frame_light.webp" alt="iron_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/heavy_modular_frame.webp" alt="iron_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/iron_parts/fused_modular_frame.webp" alt="iron_part"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                        <tr><td>
+                          <button class="button collapsible">Nuclear Parts</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/electromagnetic_control_rod.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/encased_plutonium_cell.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/encased_uranium_cell.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/non-fissile_uranium.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/nuclear_pasta.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/plutonium_fuel_rod.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/plutonium_pellet.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/plutonium_waste.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/uranium_fuel_rod.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/uranium_pellet.webp" alt="nuclear"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/necluar_parts/uranium_waste.webp" alt="nuclear"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                        <tr><td>
+                          <button class="button collapsible">Packaging</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/empty_canister.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/empty_fluid_tank.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_alumina_solution.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_fuel.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_heavy_oil_residue.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_liquid_biofuel.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_nitric_acid.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_nitrogen_gas.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_oil.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_sulfuric_acid.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_turbofuel.webp" alt="package"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/packaging/packaged_water.webp" alt="package"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+
+                        <tr><td>
+                          <button class="button collapsible">Plastic</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/plastic/fabric.webp" alt="plastic"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/plastic/plastic.webp" alt="plastic"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/plastic/rubber.webp" alt="plastic"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                        <tr><td>
+                          <button class="button collapsible">Powder</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/powder/concrete.webp" alt="powder"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/powder/copper_powder.webp" alt="powder"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/powder/silica.webp" alt="powder"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/powder/smokeless_powder.webp" alt="powder"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/powder/black_powder.webp" alt="powder"></li>
+                                </ul>
+                              </div>
+                        </td></tr>                        
+                        <tr><td>
+                            <button class="button collapsible">Steel Parts</button>
+                              <div class="content-col">
+                                <ul class="img-list">
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/steel_parts/encased_industrial_beam.webp" alt="steel_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/steel_parts/reinforced_steel_plate.webp" alt="steel_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/steel_parts/steel_beam.webp" alt="steel_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/steel_parts/steel_pipe.webp" alt="steel_part"></li>
+                                  <li><img class="img" src="../img/game_elemnts/produced_parts/steel_parts/steel_plate.webp" alt="steel_part"></li>
+                                </ul>
+                              </div>
+                        </td></tr>
+                    </table>
+    
+                <!--Change to table and to collapse the items they contain-->
+
+            </div>
+    </div>
+
+
+    <footer id="footer"></footer>
+    <script src="../js/insertOnLoad.js"></script>
+
+    <script>
+        let coll = document.getElementsByClassName("collapsible");
+        let i;
+        
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            let content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            } 
+          });
+        }
+    </script>
+    <!--
+    <script>
+      function loadAll() {
+        let items = document.getElementsByClassName("img");
+        let allItemsList = document.getElementById("all");
+        let index = 0;
+        for (let index = 0; index < items.length; index++) {
+          allItemsList.innerHTML += `<li>`+items[index].outerHTML+`</li>`;
+        }
+      }
+      
+      
+      //allItemsList.innerHTML += `<li>`+items[0].outerHTML+`</li>`;
+    </script>
+    -->
+    <!--
+    <script>
+      import * as img from '../img/game_elemnts/raw_resources/';
+      function insertImg() {
+        
+        for (var i=0;i<img.length;i++)
+        {
+        document.querySelector("image-container").innerHTML+=('<img src='+img[i].src);
+        }
+      }
+    </script>
+    -->
+    
+</body>
+</html>
