@@ -1,3 +1,15 @@
+:root {
+    --orange: #FA9549;
+    --light-g: rgb(68, 68, 68);
+    --middle-g: #303030;
+    --dark-g: #1e1e1e;
+
+    --outline-color: #FA9549;
+    --fill-color: #1e1e1e;
+}
+html {
+    font-size: 100%;
+}
 body {
     overflow: hidden;
 }
@@ -27,7 +39,8 @@ ul {
     padding: 0;
     margin-top: 20px;
     font-size: 1.3rem;
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: calc(100% - 10rem);
 }
 #item-menu li {
     margin-bottom: 5px;
@@ -57,8 +70,9 @@ ul {
 }
 
 #item-menu .item {
-    margin-bottom: 7px;
-    margin-left: 7px;
+    margin-bottom: .5rem;
+    margin-left: .9rem;
+    margin-right: 1rem;
     display: flex;
     align-items: center;
 }
@@ -66,6 +80,45 @@ ul {
     width: 30px;
     margin-right: 3px;
 }
+
+/*preview and information about machines*/
+#machine-preview {
+    left: 100%;
+    z-index: -100;
+    position: absolute;
+
+    width: max-content;
+    padding: 1em;
+    margin-left: .4em;
+
+    background-color: #303030;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+
+    transition: transform 1s ease, opacity 1s;
+    transition-delay: 0s;
+}
+#machine-preview #mp-name {
+    color: #FA9549 !important;
+    font-size: larger;
+}
+#machine-preview #mp-img {
+    width: 7em;
+    border: #FA9549 1px solid;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#machine-preview table {
+    color: white;
+}
+.hide-preview-left {
+    transform: translateX(calc(-100% - .4rem ));
+    opacity: 0;
+    transition-delay: .5s !important;
+}
+
 
 /*Copy and Paste row*/
 #copy-paste {
@@ -152,7 +205,9 @@ ul {
         outline: none;
         float: right;
     }
-    
+    #properties input[type=color]:hover {
+        opacity: .7;
+    }
     #properties input[type=color]::-webkit-color-swatch-wrapper {
         padding: 0; 
     }
@@ -160,24 +215,28 @@ ul {
         border: none;
         border-radius: 10px;
     }
-
-    #properties input[type=text] {
+    #properties input[type=number] {
         font-size: 1.1rem;
         background-color: inherit;
         border-style: none;
         outline: none;
         display: inline-block;
         padding: 0;
-        min-width: 20px;
-        max-width: 29px;
-        width: min-content;
+        max-width: 2rem;
         color: white;
         size: 3;
+        text-align: end;
         /*background-color: blue;*/
+        -moz-appearance: textfield;
     }
-    #properites input[type=text]:focus {
+    #properites input[type=number]:focus {
         border-style: none;
         outline: none;
+    }
+    #properties input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 
     #properties input[type=range] {
@@ -215,6 +274,13 @@ ul {
         font-size: 1.1rem;
         float: right;
         color: white;
+        outline: none;
+        border-color: transparent;
+        background: inherit;
+    }
+    #properties select option {
+        background: auto;
+        background-color: #303030;
     }
 
 
@@ -242,8 +308,62 @@ ul {
     margin-right: 5px;
 }
 
+#factory-stats {
+    --padding: 10rem;
+    width: calc(100vw - var(--padding)*2);
+    height: 100%;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+
+    padding: var(--padding);
+    background-color: #000000A0;
+    transition: transform .5s ease-in-out;
+}
+#factory-stats .f-box {
+    padding: 2rem;
+    z-index: 101;
+}
+#factory-stats #f-content {
+    font-size: 1.3rem;
+}
+#factory-stats .f-head,.f-cont {
+    padding: 1rem;
+}
+#factory-stats .f-cont {
+    margin-bottom: 2rem;
+}
+
 
 /*general classes*/
 .hidden {
-    display: none !important;
+    display: none;
+}
+.hide-page-up {
+    transform: translateY(-200vh) !important;
+}
+
+/*Satis Scroll bar*/
+.satis-scroll::-webkit-scrollbar {
+    margin-left: 50px;
+    width: 4px;
+}
+.satis-scroll::-webkit-scrollbar-track {
+    background: rgb(68, 68, 68);
+    border-radius: 20px;
+}
+.satis-scroll::-webkit-scrollbar-thumb {
+    background: #FA9549;  
+    border-radius: 20px;   
+}
+.satis-scroll::-webkit-scrollbar-thumb:hover {
+    background: #FA9A49 !important;
+}
+/*scroll bar end*/
+
+/*Elements on the workspace*/
+.w-space-element {
+    border: 1.5px solid var(--outline-color) !important;
+    border-radius: 50%;
+    background-color: var(--fill-color) !important;
 }
