@@ -16,9 +16,7 @@
 
     <style>
         #testCircle {
-            background-color: rgb(68, 68, 68);
-            border: 1px solid #FA9549;
-            border-radius: 50%;
+            
 
             text-align: center;
             padding: 100px;
@@ -40,13 +38,46 @@
 <body>
     <nav id="navbar"></nav>
 
+    <div id="testCircle" class="w-space-element"></div>
 
-    <div id="testCircle" class="content-dark"></div>
 
     <div id="left-sidebar" class="content-regular">
-        <ul id="item-menu">
-            
+
+        <div id="machine-preview" class="hide-preview-left">
+            <div id="mp-name">Miner Mk. 1</div>
+            <img id="mp-img" src="../img/machines/extraction/Miner_Mk.1.webp" alt="preview">
+            <div id="mp-info">
+                <table>
+                    <tr>
+                        <td>Width:</td>
+                        <td><span id="mp-info-w">12</span> m</td>
+                    </tr>
+                    <tr>
+                        <td>Length: </td>
+                        <td><span id="mp-info-l">12</span> m</td>
+                    </tr>
+                    <tr>
+                        <td>Height:</td>
+                        <td><span id="mp-info-h">12</span> m</td>
+                    </tr>
+                    <tr>
+                        <td>Power: </td>
+                        <td><span id="mp-info-p">5</span> MW</td>
+                    </tr>                    
+                </table>
+            </div>
+        </div>
+
+        <ul id="item-menu" class="satis-scroll">
+            <!--
+            <li id="h`+i+`"><i id="h-i`+i+`" class="bi bi-chevron-right"></i>Test</li>
+                <ul id="l-i${i}" class="items">
+                    <li class="item"><img src="../img/machines/extraction/Miner_Mk.1.webp" alt="icon" class="machine-icon"><div>
+                        Hello World
+                    </div></li>
+                </ul>-->
         </ul>
+        
         <div id="tool-line">
             <ul id="copy-paste">
                 <li class="hover"><i class="bi bi-clipboard"></i>Copy</li>
@@ -59,9 +90,11 @@
                 <li id="add"><i class="op bi bi-plus-square"></i></li>
                 <li id="delete"><i class="op bi bi-trash"></i></li>
             </ul>
-        </div>
-        
+        </div>   
+
     </div>
+
+    
 
     <div id="properties">
         <div id="p-head" class="content-light">Properties</div>
@@ -69,11 +102,11 @@
             <ul>
                 <li class="test">
                     <label for="eff-t-in">Efficiency</label>
-                    <input type="text" id="eff-t-in" name="efficiency" value="100" placeholder="value" maxlength="3">%
+                    <input type="number" id="eff-t-in" name="efficiency" value="100" placeholder="----" maxlength="3" oninput="synchInValueWithAnother('eff-t-in','eff-s-in')">%
                     <br>
                     <br>
-                    <label for="eff-s-in">50%</label>
-                    <input type="range" id="eff-s-in" name="efficiency" min="1" max="250" value="100">
+                    <label for="eff-s-in">0%</label>
+                    <input type="range" id="eff-s-in" name="efficiency" min="0" max="250" value="100" onpointermove="synchInValueWithAnother('eff-s-in','eff-t-in')">
                     <label for="efficiency">250%</label>
                 </li>
                 <li class="">
@@ -81,15 +114,16 @@
                     <select name="product" id="product" class="content-light">
                         <option value="n/a">Select a Recipie</option>
                         <option value="iron_bar">Iron Bars</option>
+                        <option value="iron_plates">Iron Plates</option>
                     </select>
                 </li>
                 <li class="">
                     <label for="fill-color">Fill-Color</label>
-                    <input type="color" name="fill-color" id="fill-color" class="c-picker" value="#1e1e1e">
+                    <input type="color" name="fill-color" id="fill-color" class="c-picker" value="#1e1e1e" oninput="setColor('--fill-color','fill-color')">
                 </li>
                 <li class="">
                     <label for="out-color">Outline-Color</label>
-                    <input type="color" name="out-color" id="out-color" class="c-picker" value="#FA9549">
+                    <input type="color" name="out-color" id="out-color" class="c-picker" value="#FA9549" oninput="setColor('--outline-color', 'out-color')">
                 </li>
             </ul>
         </div>
@@ -100,10 +134,30 @@
     <div id="indicator" class="content-regular">
         <ul>
             <li><i class="bi bi-lightning-charge"></i>Power: <span id="power">0</span> MW</li>
-            <li class="hover point"><i class="bi bi-bar-chart-line"></i>Factory Stats</li>
-        </ul>
+            <li id="f-stats-btn" class="hover point" title="Shortcut: I"><i class="bi bi-bar-chart-line"></i>Factory Stats</li>
+        </ul>    
     </div>
-    
+
+
+    <div id="factory-stats" class="hide-page-up">
+        <div id="f-stats-content">
+            <div class="content-light satisFont f-box">
+                Factory Stats
+            </div>
+            <div id="f-content" class="content-dark f-box">
+                <div class="f-head content-light">Input Resources</div>
+                <div id="f-in-res" class="f-cont content-regular">hello</div>
+
+                <div class="f-head content-light">Output Rescources</div>
+                <div id="f-out-res" class="f-cont content-regular"></div>
+                
+                <div class="f-head content-light">Buildings</div>
+                <div id="f-build" class="f-cont content-regular"></div>
+            </div>   
+        </div>
+             
+    </div>
+
     <script src="../js/controls.js"></script>
 </body>
 </html>
