@@ -6,6 +6,17 @@
 
     --outline-color: #FA9549;
     --fill-color: #1e1e1e;
+
+    --building-cursor: all-scroll;
+}
+* {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 html {
     font-size: 100%;
@@ -21,26 +32,21 @@ ul {
 
 /*Elements of the Left-Sidebar*/
 
-#left-sidebar {
-    position: absolute;
-    left: 12px;
-    bottom: 12px;
-    width: 200px;
-
-    padding: 0px 20px;
-    height: calc(100% - 86.5px);
-    z-index: 1;
-    
-    font-size: larger;
-}
 /*list of categories*/
 #item-menu {
+    position: absolute;
+    left: 1rem;
+    top: 5rem;
+    bottom: 9.5rem;
+    width: 200px;
+
+    padding: 1rem;
+    
+    z-index: 1;
     list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
     font-size: 1.3rem;
     overflow-y: auto;
-    max-height: calc(100% - 10rem);
+    transition: transform .5s ease-in-out;
 }
 #item-menu li {
     margin-bottom: 5px;
@@ -80,13 +86,17 @@ ul {
     width: 30px;
     margin-right: 3px;
 }
+.hide-menu-left {
+    transform: translateX(calc(-100% - 1rem)) !important;
+}
 
 /*preview and information about machines*/
 #machine-preview {
-    left: 100%;
-    z-index: -100;
+    left: 16rem;
+    top: 5rem !important;
     position: absolute;
 
+    min-width: 3rem;
     width: max-content;
     padding: 1em;
     margin-left: .4em;
@@ -96,7 +106,7 @@ ul {
     flex-direction: column;
     gap: .5em;
 
-    transition: transform 1s ease, opacity 1s;
+    transition: transform .8s ease-in-out, opacity 1s, width .8s;
     transition-delay: 0s;
 }
 #machine-preview #mp-name {
@@ -114,8 +124,9 @@ ul {
     color: white;
 }
 .hide-preview-left {
-    transform: translateX(calc(-100% - .4rem ));
+    transform: translateX(calc(-100% - .4rem )) !important;
     opacity: 0;
+    transition: transform .8s ease, opacity 2s !important;
     transition-delay: .5s !important;
 }
 
@@ -133,6 +144,7 @@ ul {
     margin: 10px;
     text-align: center;
     cursor: pointer;
+    font-size: .9em !important;
 }
 #copy-paste li i {
     color: #FA9549;
@@ -153,6 +165,7 @@ ul {
     /*color: #C89549;
     opacity: 2;*/
     color: #FA9549;
+    opacity: .5;
 }
 .bordered {
     border: #FA9549 solid 1px;
@@ -164,15 +177,20 @@ ul {
 /*Operators and copy and paste*/
 #tool-line {
     position: absolute;
-    bottom: 24px;
+    width: 200px;
+    left: 1rem;
+    bottom: 1rem;
+    padding: 1rem;
+    font-size: 1.3rem;
 }
 
 /*Propertie Window*/
 #properties {
-    position: absolute;
-    right: 12px;
-    top: 73.5px;
-    left: auto;    
+    position: fixed;
+    right: 1rem;
+    top: 5rem;
+    left: auto;  
+    transition: .5s transform ease-in-out;  
 }
 #p-head {
     padding: 15px;
@@ -289,8 +307,8 @@ ul {
 /*Indicator at the right bottom corner*/
 #indicator {
     position: absolute;
-    bottom: 12px;
-    right: 12px;
+    bottom: 1rem;
+    right: 1rem;
 }
 #indicator ul {
     list-style-type: none;
@@ -311,20 +329,43 @@ ul {
 #factory-stats {
     --padding: 10rem;
     width: calc(100vw - var(--padding)*2);
+    width: 100%;
     height: 100%;
     z-index: 100;
     position: absolute;
     top: 0;
 
-    padding: var(--padding);
+    /*padding: var(--padding);*/
     background-color: #000000A0;
     transition: transform .5s ease-in-out;
+
+    overflow-y: auto;
+}
+#factory-stats #close-f-stats {
+    position: fixed;
+    width: 3.3rem;
+    height: 3.3rem;
+    text-align: center;
+    top: 5rem;
+    left: 5rem;
+    font-size: 3rem;
+    border: 2px solid grey;
+    border-radius: .5rem;
+}
+#factory-stats i:hover {
+    color: var(--orange);
 }
 #factory-stats .f-box {
+    margin: var(--padding);
+    margin-bottom: 0;
     padding: 2rem;
     z-index: 101;
 }
 #factory-stats #f-content {
+    margin: var(--padding);
+    margin-top: 0;
+    position: relative;
+    overflow-y: auto;
     font-size: 1.3rem;
 }
 #factory-stats .f-head,.f-cont {
@@ -334,13 +375,89 @@ ul {
     margin-bottom: 2rem;
 }
 
+/*settings page*/
+#settings-window {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000A0;
+    transition: transform .5s ease-in-out;
+    overflow-y: auto;
+}
+#settings-window #settings-content {
+    margin: 10rem;
+    background-color: var(--dark-g);
+}
+#settings-window .s-head {
+    padding: 2rem;
+}
+#settings-window #settings-menu {
+    padding:2rem;
+}
+#settings-window .set-title {
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background-color: var(--dark-g);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#settings-window .set-setting{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    text-align: center;
+    width: 5rem;
+    color: white;
+    font-size: 1.2rem;
+    border: 1px white solid;
+    border-radius: .6rem;
+    background-color: inherit;
+}
+#settings-window .set-setting:hover {
+    background-color: var(--light-g) !important;
+    font-weight: 750;
+}
+#settings-window .set-reset {
+    text-align: center;
+    margin-right: 1rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    background-color: inherit;
+    color: white;
+    font-size: 1.2rem;
+    border: 1px white solid;
+    border-radius: .6rem;
+    opacity: 0;
+}
+#settings-window .set-reset-changed {
+    /*background-color: var(--light-g) !important;*/
+    opacity: 1;
+}
+#settings-window .set-reset-changed:hover {
+    /*background-color: var(--middle-g) !important;*/
+    color: var(--orange);
+}
+#settings-window #set-full-reset {
+    width: 11.5rem;
+    opacity: 1 !important;
+}
+#settings-window #set-full-reset:hover {
+    color: red;
+}
 
 /*general classes*/
 .hidden {
     display: none;
 }
 .hide-page-up {
-    transform: translateY(-200vh) !important;
+    transform: translateY(-100%) !important;
+}
+.hide-right-smooth {
+    transform: translateX(calc(100% + 1rem)) !important;
 }
 
 /*Satis Scroll bar*/
@@ -362,8 +479,112 @@ ul {
 /*scroll bar end*/
 
 /*Elements on the workspace*/
-.w-space-element {
+.building {
+    
+    --outline-color: #FA9549;
+    --fill-color: #1e1e1e;
+    
+    z-index: -1;
+    /*cursor: var(--building-cursor);*/
+    cursor: var(--building-cursor);
     border: 1.5px solid var(--outline-color) !important;
-    border-radius: 50%;
     background-color: var(--fill-color) !important;
+
+    width: 120px;
+    height: 70px;
+    position: fixed;
+    --x: 500px;
+    --y: 500px;
+    top: var(--y);
+    left: var(--x);
+
+    --rotate: 0deg;
+    transform: rotate(var(--rotate));
+
+    display: flex;
+    justify-content: space-between;    
+}
+.building .b-img {
+    height: 100%;
+}
+.portLine {
+    height: 100%;
+    width: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-self: end;
+    justify-content: space-around;
+}
+.inputPort {
+    align-self: flex-start;    
+    transform: translateX(-50%);
+}
+.outputPort {
+    align-self: flex-start;
+    transform: translateX(50%);
+}
+.port {
+    background-color: aliceblue;
+    width: 10px;
+    height: 10px;    
+    border-radius: 100%;
+}
+.port:hover {
+    opacity: .6;
+}
+.conveyor {
+    background-color: darkgray !important;
+}
+.fluid {
+    background-color: cornflowerblue !important;
+}
+
+
+
+.selected {
+    border-width: 3px !important;
+    top: calc(var(--y) - 2px) !important;
+    left: calc(var(--x) - 2px) !important;
+}
+#tool-indicator {
+    z-index: 50;
+}
+#tool-indicator-value {
+    color: var(--orange);
+}
+.indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+
+    z-index: 1002;
+
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--light-g);
+    opacity: 1;
+}
+.full-b-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    background-color: black;
+    opacity: .8;
+    transition: opacity .5s;
+}
+.full-opacity {
+    opacity: 0 !important;
+    transition: opacity .5s, z-index 3s;
+    z-index: -1000;
+}
+.full-opacity-delay {
+    opacity: 0 !important;
+    transition: opacity 1s, z-index 3s;
+    z-index: -1000;
+    transition-delay: .4s;
 }
