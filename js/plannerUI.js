@@ -1,8 +1,18 @@
 let data  
 const headings = ['Extraction','Production','Generators','Logistic','Extra']
+let buildings = []
+let maxId = 0
+let operation = 'move'
+let mouseX
+let mouseY
+let setKeybinds = false
+let changeSetting = -1
+let settings_Key = ['1','2','3','4','Escape','f','Delete','w','s','a','d']
+let settings_Name = ['Tool: Move', 'Tool: Select', 'Tool: Add', 'Tool: Delete', 'Open/Close Settings', 'Open/Close Factory Stats', 'Delete selected Building','Up','Down','Left','Right']
 
 window.onload = function() {
     setUpWindow()
+    synchPowerIndicator()
 }
 
 async function setUpWindow() {
@@ -11,6 +21,8 @@ async function setUpWindow() {
     loadLeftSidebar() 
     loadButtons()
     keybinds()
+    setupKeybindSettings()
+    createLine(40,100,1500,500,'line')
 }
 
 async function fetchData() {
@@ -31,27 +43,13 @@ function loadLeftSidebar() {
         for (x in data.machines[i][headings[i]]) {
             //console.log(x +' ' + i)
             list += `
-            <li class="item" onmouseenter="showPreview(this,${i},${x})" onmouseleave="hidePreview()">
+            <li class="item" onmouseenter="showPreview(this,${i},${x})" onmouseleave="hidePreview()" onclick="addBuilding(${i},${x})">
                 <img src="${data.machines[i][headings[i]][x].url}" alt="icon" class="machine-icon">                
                 ${data.machines[i][headings[i]][x].name}
             </li>` 
         }
         list += `</ul>`
         sidebar.innerHTML += list;
-
-        // adds machine preview
-        
-        let s_elements = document.getElementById(`l-i${i}`).getElementsByClassName('item')
-/*
-        for (let x = 0; x<s_elements.length; x++) {
-            s_elements[x].onmouseover = function(i,x) {
-                console.log('hello')
-                console.log(data.machines[i][headings[i]][x])
-               topPosition(this, data.machines[i][headings[i]][x])
-            }(i,x)
-            //continue
-        }
-*/
     }// for i in headings end
 
     //loads the arrows beside the headings
@@ -74,23 +72,6 @@ function loadLeftSidebar() {
         }
     }
 
-    // adds eventlistner to operators
-    let toolline = document.getElementsByClassName('op')
-    for (i in toolline) {
-        let tool = toolline[i]
-        tool.onclick = function() {
-            for (x in toolline) {
-                if (toolline[x]!==tool && toolline[x].classList.contains('operating')) {
-                    toolline[x].classList.remove('operating')
-                }
-                else {
-                    tool.classList.add('operating')
-                }    
-            }
-            
-        }
-    }
-    
 }// load left sidebar end
 
 
@@ -102,19 +83,89 @@ function keybinds() {
     document.onkeydown = function(event) {
         let key = event.key
         //console.log(event.key)
-        let f_stats = document.getElementById('factory-stats')  
-        switch(key) {
-            case 'Escape':    
-                // leaves the factory stats              
-                if (!f_stats.classList.contains('hide-page-up')) {
-                    f_stats.classList.add('hide-page-up')
-                }break
-            case 'i':
-                // enters or leaves the factory stats
-                f_stats.classList.toggle('hide-page-up')
-                break 
+        if (!setKeybinds) {
+            let f_stats = document.getElementById('factory-stats')  
+            let settings_w = document.getElementById('settings-window')
+            switch(key) {
+                case settings_Key[0]:    
+                    setOperation('move')
+                    break
+                
+                case settings_Key[1]:    
+                    setOperation('select')
+                    break
+
+                case settings_Key[2]: 
+                    setOperation('add')
+                    break
+
+                case settings_Key[3]:     
+                    setOperation('delete')
+                    break
+                case settings_Key[4]:    
+                    // leaves the factory stats              
+                    if (f_stats.classList.contains('hide-page-up')) {
+                        toggleSettingsWindow()
+                    }
+                    if (!f_stats.classList.contains('hide-page-up')) {
+                        f_stats.classList.add('hide-page-up')
+                    }                    
+                    break
+
+                case settings_Key[5]:
+                    // enters or leaves the factory stats
+                    if (settings_w.classList.contains('hide-page-up')){
+                        f_stats.classList.toggle('hide-page-up')
+                    }                
+                    break
+                case settings_Key[6]:
+                    removeBuilding()
+                    let p = document.getElementById('properties')
+                    if (!p.classList.contains('hide-right-smooth')) {
+                        p.classList.add('hide-right-smooth')
+                    }
+                    break
+                case settings_Key[7]:
+                    moveAll(0,-5)
+                    break
+                case settings_Key[8]:
+                    moveAll(0,5)
+                    break
+                case settings_Key[9]:
+                    moveAll(-5,0)
+                    break
+                case settings_Key[10]:
+                    moveAll(5,0)
+                    break
+            }
+        }
+        else if(setKeybinds) {
+            settings_Key[changeSetting] = event+''
+            updateSettingButton(key)
+            changeSetting = -1
+            document.querySelector('#settings-selector').classList.add('full-opacity')
+
+            setKeybinds = false
         }
     }
+}
+
+document.onwheel = function(event) {
+    
+    if (event.target.classList.contains('building')|| event.target.classList.contains('b-img')){
+        let e = event.target
+        if (e.classList.contains('b-img')){
+            e = e.parentNode            
+        }
+        if (e.classList.contains('selected')) {
+            
+            e.style.setProperty("--rotate" ,(parseInt((getComputedStyle(e).getPropertyValue('--rotate').split('deg')[0]))+15)+'deg')
+        }            
+        //console.log(getComputedStyle(e).getPropertyValue('--rotate'))
+    }
+}
+function toggleSettingsWindow() {
+    document.getElementById('settings-window').classList.toggle('hide-page-up')
 }
 
 // functions for machine preveiw --------------------------------
@@ -128,7 +179,7 @@ function showPreview(element, i, x) {
     preveiw.querySelector('#mp-info-l').innerHTML = machine.length
     preveiw.querySelector('#mp-info-h').innerHTML = machine.height
     preveiw.querySelector('#mp-info-p').innerHTML = machine.power
-    //preveiw.querySelector('mp-info-').innerHTML = machine
+    //preveiw.querySelector('#mp-info-').innerHTML = machine
 
     preveiw.classList.toggle('hide-preview-left')
     preveiw.style.top = 'rem'
@@ -136,11 +187,10 @@ function showPreview(element, i, x) {
 function hidePreview() {
     let preveiw = document.getElementById('machine-preview')
     preveiw.classList.toggle('hide-preview-left')
-    preveiw.style.top = '0rem'
 }
 
 function machinePreviewHTML(machine) {    
-    console.log(machine)
+    //console.log(machine)
     return `
     <div class="machine-preview hidden">
         <div id="mp-name">${machine.name}</div>
@@ -169,7 +219,211 @@ function machinePreviewHTML(machine) {
 }
 
 // machine preview end ------------------------------------------
-//
+
+
+// adding machines from selection and their moving ---------------------
+class building {
+    constructor(id,name,machIndex,catIndex,fillColor,outColor,efficiency,reciepie,x,y) {
+        this.id = id
+        this.name = name
+        this.machIndex = machIndex
+        this.catIndex = catIndex
+        this.fillColor = fillColor
+        this.outColor = outColor
+        this.efficiency = efficiency
+        this.reciepie = reciepie
+        this.x = x
+        this.y = y
+    }
+
+    move(horizontal,vertical) {
+        this.x += horizontal
+        this.y += vertical
+
+        document.getElementById(this.id).style.setProperty("--x" ,(this.x) + "px")
+        document.getElementById(this.id).style.setProperty("--y" ,(this.y) + "px")        
+    }
+    updatePosition(x,y) {
+        this.x = x
+        this.y = y
+    }
+
+    hasId(id) {
+        if (this.id === id)
+            return true
+        else
+            return false
+    }
+
+}
+function getBuildingById(id) {
+    for (let i = 0; i<buildings.length; i++) {
+        if (buildings[i].id === id){
+            return buildings[i]
+        }
+    }
+    return null
+}
+
+
+function addBuilding(machIndex, catIndex) {
+    let inputData = data.machines[machIndex][headings[machIndex]][catIndex]
+    buildings.push(new building("b"+maxId,inputData.name,machIndex,catIndex,'#1e1e1e','#FA9549',100,'N/A',500,500))
+    //console.log(buildings[buildings.length-1])
+
+    document.getElementById('workspace').innerHTML += `
+        <div id="b${maxId}" class="building" onclick="select(b${maxId})">
+            <div class="portLine"></div>
+            <img class="b-img" src="${inputData.url}">
+            <div class="portLine"></div>
+        </div>`
+
+    
+
+    //let portLines = document.getElementById('b'+maxId).innerHTML.getElementsByClassName('portLine')
+    let bD = document.getElementById('b'+maxId)
+    let bE = getBuildingById('b'+maxId)
+    let bData = data.machines[bE.machIndex][headings[bE.machIndex]][bE.catIndex]
+   
+    for (let i = 0; i< parseInt(bData.conveyor_in);i++) {
+        bD.getElementsByClassName('portLine')[0].innerHTML += `<div class="inputPort port conveyor"></div>`
+    }
+    for (let i = 0; i< parseInt(bData.fluid_in);i++) {
+        bD.getElementsByClassName('portLine')[0].innerHTML += `<div class="inputPort port fluid"></div>`
+    }
+    for (let i = 0; i< parseInt(bData.conveyor_out);i++) {
+        bD.getElementsByClassName('portLine')[1].innerHTML += `<div class="outputPort port conveyor"></div>`
+    }
+    for (let i = 0; i< parseInt(bData.fluid_out);i++) {
+        bD.getElementsByClassName('portLine')[1].innerHTML += `<div class="outputPort port fluid"></div>`
+    }
+
+
+
+
+
+
+    maxId++
+
+    synchPowerIndicator()
+    synchFactoryStats()
+}
+function removeBuilding() {
+    let selected = document.getElementsByClassName('selected')
+    for (let i=0; i<selected.length; i++) {
+        //console.log(selected[i].id)
+        buildings.splice(buildings.findIndex(obj => obj.id === selected[i].id), 1)
+        selected[i].parentNode.removeChild(selected[i])
+    }
+    synchPowerIndicator()
+    synchFactoryStats()
+}
+
+setInterval(checkMoving(), 500)
+
+function checkMoving() {
+    document.onmousemove = function moving(event) {
+        let selectedElements = document.getElementsByClassName('moving')
+        for (let x = 0; x<selectedElements.length; x++) {
+            let e = selectedElements[x]
+            
+            e.style.setProperty("--x" ,(event.pageX - mouseX) + "px")
+            e.style.setProperty("--y" ,(event.pageY - mouseY) + "px")
+            buildings[e.id.substring(1)].updatePosition((event.pageX - mouseX), (event.pageX - mouseY))
+            //console.log(buildings[e.id.substring(1)].x +":"+ buildings[e.id.substring(1)].y)
+        }
+        //console.log(buildings[selectedElements[0].id.substring(1)].x +":"+buildings[selectedElements[0].id.substring(1)].y)
+    }
+}
+function moveAll(horizontal,vertical) {
+    for (let i = 0; i<buildings.length; i++) {
+        buildings[i].move(horizontal,vertical)
+    }
+}
+// add buildings end ---------------------------------------------------
+
+// actions on selecting an building
+function select(selected) {
+    switch(operation) {
+        case 'move':
+            mouseX = event.offsetX
+            mouseY = event.offsetY
+            selected.classList.toggle('selected')
+            selected.classList.toggle('moving')            
+            break
+        case 'select':
+            selected.classList.toggle('selected')
+            document.getElementById('properties').classList.toggle('hide-right-smooth')     
+            if (selected.classList.contains('selected')) {
+                synchPropertiesByElement(selected)   
+            } else {
+                synchElementByProperties(selected)
+            }
+                
+            break
+        case 'add':
+            break
+        case 'delete':
+            selected.classList.toggle('selected')
+            removeBuilding()
+            break
+    }    
+}
+
+// operator changing
+function setOperation(e) {
+    operation = e
+    let all = document.getElementsByClassName('op')
+    for (let x=0; x<all.length; x++) {
+        all[x].classList.add('operating')
+        all[x].classList.remove('operating')
+    }
+    document.getElementById(e).querySelector('.op').classList.add('operating')
+
+    switch(operation) {
+        case 'move':
+            document.querySelector(':root').style.setProperty('--building-cursor','all-scroll')
+            break
+        case 'select':
+            document.querySelector(':root').style.setProperty('--building-cursor','pointer')
+            break
+        case 'add':
+            document.querySelector('#item-menu').classList.remove('hide-menu-left')
+            break
+        case 'delete':
+            document.querySelector(':root').style.setProperty('--building-cursor','url(https://pic.onlinewebfonts.com/svg/img_407448.png), auto')
+            break
+    }
+    if (operation !== 'settings') {
+        showCurrentTool()
+    }
+
+    // TODO:  remove stuff from other after changing tool
+    if(operation !== 'move') {
+        document.querySelector(':root').style.setProperty('--building-cursor','default')
+    }
+    if (operation !== 'select') {
+        let p = document.getElementById('properties')
+        if (!p.classList.contains('hide-right-smooth')) {
+            p.classList.add('hide-right-smooth')
+        }
+        let s = document.getElementsByClassName('selected')
+        for (let i = 0;i<s.length; i++) {
+            s[i].classList.remove('selected')
+        }
+    }
+    if (operation !== 'add') {
+        document.querySelector('#item-menu').classList.add('hide-menu-left')
+    }
+    
+}
+function showCurrentTool() {
+    document.getElementById('tool-indicator-value').innerHTML = operation
+    document.getElementById('tool-indicator').classList.toggle('full-opacity-delay')
+    setTimeout(()=>{
+        document.getElementById('tool-indicator').classList.toggle('full-opacity-delay')
+    }, 1000)
+}
 
 // reading properties out from inputs --------------------------------------
 // synchronisation of range for efficiency
@@ -178,20 +432,161 @@ function synchInValueWithAnother(idFrom,idTo) {
 }
 
 function setColor(variable, id) {
-    let r = document.querySelector(':root')
-    r.style.setProperty(variable, document.querySelector('#'+id).value);
+    let e = document.getElementsByClassName('selected')
+    for (let i = 0; i<e.length; i++) {
+        e[i].style.setProperty(variable, document.querySelector('#'+id).value);
+    }    
 }
+
+function synchElementByProperties(element) {
+    let b = buildings[element.id.substring(1)]
+    b.reciepie = document.getElementById('product').value
+    b.efficiency = document.getElementById('eff-t-in').value
+    b.fillColor = document.getElementById('fill-color').value
+    b.outColor = document.getElementById('out-color').value
+}
+function synchPropertiesByElement(element){
+    let b = buildings[element.id.substring(1)]
+    
+    document.getElementById('eff-t-in').value = b.efficiency
+    synchInValueWithAnother('eff-t-in','eff-s-in')
+
+    console.log(document.getElementById('product').value)
+    document.getElementById('product').value = b.reciepie
+
+    document.getElementById('fill-color').value = b.fillColor
+
+    document.getElementById('out-color').value = b.outColor
+}
+
+function synchPowerIndicator() {
+    let energy = 0
+    for (let i = 0; i<buildings.length; i++) {
+        energy += data.machines[buildings[i].machIndex][headings[buildings[i].machIndex]][buildings[i].catIndex].power
+    }
+    document.getElementById('power').innerText = energy
+}
+
+function synchFactoryStats() {
+    let f_builds = []
+
+    // exe help functions
+    for (let i = 0; i<buildings.length; i++) {
+        if (alreadyAdded(buildings[i].name)) {
+            incCount(buildings[i].name)
+        }
+        else {
+            addBuildingObjCount(buildings[i].name)
+        }
+    }
+        // help functions
+        function addBuildingObjCount(name) {
+            f_builds.push({"name":name, "count":1})
+        }
+        function alreadyAdded(name) {
+            for (let i = 0; i<f_builds.length; i++) {
+                if(f_builds[i].name === name){
+                    return true
+                }
+            }
+            return false
+        }
+        function incCount(name) {
+            for (let i=0; i<f_builds.length; i++) {
+                if (f_builds[i].name === name) {
+                    f_builds[i].count++
+                    return
+                }
+            }
+        }
+    
+    // write to stats
+    let f_build = document.getElementById('f-build')
+    f_build.innerHTML = ''
+    for (let i =0; i<f_builds.length; i++) {    
+        f_build.innerHTML += `<div>${f_builds[i].count}x ${f_builds[i].name}</div>`
+    }
+    if (f_builds.length === 0) {
+        f_build.innerHTML = `<div>No buildings placed</div>`
+    }
+}
+
 
 // properties end ----------------------------------------------------------
 
 
+// functions for settings -----------------
+function recordPressedKey(index) {
+    document.querySelector("#settings-selector").classList.remove('full-opacity')
+    setKeybinds = true;
+    changeSetting = index
+}
 
+function setupKeybindSettings() {
+    let element = document.getElementById('settings-menu')
+    for (let i = 0; i<settings_Key.length; i++) {
+        element.innerHTML += `
+        <div class="set-title">
+            <div>${settings_Name[i]}</div>
+            <div>
+                <button id="rb-${i}" class="set-reset" data-id="${settings_Key[i]}" onclick="resetKeyBind(${i})">Reset</button> 
+                <button id="sb-${i}" class="set-setting" onclick="recordPressedKey(${i})">${settings_Key[i]}</button>
+            </div>
+        </div>`
+    }
+    element.innerHTML += `
+    <div class="set-title">
+        <div>Complete Keybind Reset</div>
+        <div>
+            <button id="set-full-reset" class="set-reset" onclick="resetAllKeyBinds()">Reset All</button> 
+        </div>
+    </div>
+    `
+}
+
+function updateSettingButton(key) {
+    document.getElementById(`sb-${changeSetting}`).innerHTML = key
+    document.getElementById(`rb-${changeSetting}`).classList.add('set-reset-changed')
+    settings_Key[changeSetting] = key
+}
+function resetKeyBind(index) {
+    document.getElementById(`sb-${index}`).innerHTML = document.getElementById('rb-'+index).getAttribute('data-id')
+    settings_Key[index] = document.getElementById('rb-'+index).getAttribute('data-id')
+    document.getElementById(`rb-${index}`).classList.remove('set-reset-changed')
+}
+function resetAllKeyBinds() {
+    let rButtons = document.getElementsByClassName('set-reset')
+    for (let i = 0; i<rButtons.length; i++) {
+        resetKeyBind(rButtons[i].id.substring(3))
+    }
+    
+}
+
+
+// settings end ---------------------------
+
+// calculate new line
+function createLine(x1,y1,x2,y2,lineID) {
+    let distance = Math.sqrt( ((x1-x2) * (x1-x2)) + ((y1-y2) * (y1-y2)) )
+    
+    let xMid = (x1+x2)/2
+    let yMid = (y1+y2)/2
+
+    salopeInRadian = Math.atan2(y1-y2,x1-x2)
+    salopeInDegrees = (salopeInRadian * 180) / Math.PI
+
+    let line = document.getElementById(lineID)
+    line.style.width = distance+"px"
+    line.style.top = yMid+"px"
+    line.style.left = (xMid - (distance/2)) +"px"
+    line.style.transform = 'rotate('+salopeInDegrees+'deg'
+}
 
 
 function loadButtons() {
     //factory stats  initialisation
     document.getElementById('f-stats-btn').onclick = function() {
-        popUpPage(document.getElementById('factory-stats'))
+        popUpPage('factory-stats')
     }
  
     /* on any click toggles
@@ -200,8 +595,8 @@ function loadButtons() {
     }*/
     
 }
-function popUpPage(element) {
-    element.classList.toggle('hide-page-up')
+function popUpPage(id) {
+    document.getElementById(id).classList.toggle('hide-page-up')
 }
 
 // set up eventlistenr for clicking out of an element
