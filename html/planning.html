@@ -10,93 +10,82 @@
     <link rel="stylesheet" href="../css/planner.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
-        
-    <script src="../js/navbar.js"></script>
-    <script src="../js/plannerUI.js"></script>
-
-    <style>
-        #testCircle {
-            
-
-            text-align: center;
-            padding: 100px;
-            right: 50%;
-            font-size: larger;
-            user-select: none;
-            z-index: -1;
-
-            width: 50px;
-            height: 50px;
-            
+       
+    <style>       
+        #line {
             position: absolute;
+            height: 3px;
+            background-color: aliceblue;
         }
-
-
     </style>
 
+    <script src="../js/navbar.js"></script>
+    <script src="../js/plannerUI.js"></script>
 </head>
 <body>
     <nav id="navbar"></nav>
 
-    <div id="testCircle" class="w-space-element"></div>
-
-
-    <div id="left-sidebar" class="content-regular">
-
-        <div id="machine-preview" class="hide-preview-left">
-            <div id="mp-name">Miner Mk. 1</div>
-            <img id="mp-img" src="../img/machines/extraction/Miner_Mk.1.webp" alt="preview">
-            <div id="mp-info">
-                <table>
-                    <tr>
-                        <td>Width:</td>
-                        <td><span id="mp-info-w">12</span> m</td>
-                    </tr>
-                    <tr>
-                        <td>Length: </td>
-                        <td><span id="mp-info-l">12</span> m</td>
-                    </tr>
-                    <tr>
-                        <td>Height:</td>
-                        <td><span id="mp-info-h">12</span> m</td>
-                    </tr>
-                    <tr>
-                        <td>Power: </td>
-                        <td><span id="mp-info-p">5</span> MW</td>
-                    </tr>                    
-                </table>
-            </div>
+    <!--
+    <div class="outputPoints">
+        <div class="outputLine">
+            <div class="outputPort"></div>
+            <div class="outputPort"></div>
+            <div class="outputPort"></div>
         </div>
+    </div>-->
 
-        <ul id="item-menu" class="satis-scroll">
-            <!--
-            <li id="h`+i+`"><i id="h-i`+i+`" class="bi bi-chevron-right"></i>Test</li>
-                <ul id="l-i${i}" class="items">
-                    <li class="item"><img src="../img/machines/extraction/Miner_Mk.1.webp" alt="icon" class="machine-icon"><div>
-                        Hello World
-                    </div></li>
-                </ul>-->
-        </ul>
-        
-        <div id="tool-line">
-            <ul id="copy-paste">
-                <li class="hover"><i class="bi bi-clipboard"></i>Copy</li>
-                <li class="hover"><i class="bi bi-clipboard-plus"></i>Paste</li>
-            </ul>
-            <ul id="operations">
-                <li id="settings" class="bordered"><i class="op bi bi-sliders2"></i></li>
-                <li id="move"><i class="op bi bi-arrows-move operating"></i></li>
-                <li id="select"><i class="op bi bi-cursor-fill"></i></li>
-                <li id="add"><i class="op bi bi-plus-square"></i></li>
-                <li id="delete"><i class="op bi bi-trash"></i></li>
-            </ul>
-        </div>   
+    <div id="line"></div>
 
+
+    <div id="machine-preview" class="hide-preview-left">
+        <div id="mp-name">Miner Mk. 1</div>
+        <img id="mp-img" src="../img/machines/extraction/Miner_Mk.1.webp" alt="preview">
+        <div id="mp-info">
+            <table>
+                <tr>
+                    <td>Width:</td>
+                    <td><span id="mp-info-w">12</span> m</td>
+                </tr>
+                <tr>
+                    <td>Length: </td>
+                    <td><span id="mp-info-l">12</span> m</td>
+                </tr>
+                <tr>
+                    <td>Height:</td>
+                    <td><span id="mp-info-h">12</span> m</td>
+                </tr>
+                <tr>
+                    <td>Power: </td>
+                    <td><span id="mp-info-p">5</span> MW</td>
+                </tr>                    
+            </table>
+        </div>
     </div>
 
-    
+    <!--<div id="left-top-sidebar" class="content-regular">-->
 
-    <div id="properties">
+    <ul id="item-menu" class="satis-scroll hide-menu-left content-regular"></ul>
+        
+    <!--</div>-->
+    <div id="tool-line" class="content-regular">
+        <ul id="copy-paste">
+            <li class="hover"><i class="bi bi-clipboard"></i>Copy</li>
+            <li class="hover"><i class="bi bi-clipboard-plus"></i>Paste</li>
+        </ul>
+        <ul id="operations">
+            <li id="settings" onclick="toggleSettingsWindow()"    title="Short: Esc" class="bordered"><i class="op bi bi-sliders2"></i></li>
+            <li id="move"     onclick="setOperation('move')"        title="Short: 1"><i class="op bi bi-arrows-move operating"></i></li>
+            <li id="select"   onclick="setOperation('select')"      title="Short: 2"><i class="op bi bi-cursor-fill"></i></li>
+            <li id="add"      onclick="setOperation('add')"         title="Short: 3"><i class="op bi bi-plus-square"></i></li>
+            <li id="delete"   onclick="setOperation('delete')"      title="Short: 4"><i class="op bi bi-trash"></i></li>
+        </ul>
+    </div> 
+
+
+    <div id="workspace"></div> 
+       
+
+    <div id="properties" class="hide-right-smooth">
         <div id="p-head" class="content-light">Properties</div>
         <div id="p-list" class="content-regular">
             <ul>
@@ -112,9 +101,9 @@
                 <li class="">
                     <label for="product">Recipie</label>
                     <select name="product" id="product" class="content-light">
-                        <option value="n/a">Select a Recipie</option>
-                        <option value="iron_bar">Iron Bars</option>
-                        <option value="iron_plates">Iron Plates</option>
+                        <option value="N/A">N/A</option>
+                        <option value="Iron Bar">Iron Bars</option>
+                        <option value="Iron Plates">Iron Plates</option>
                     </select>
                 </li>
                 <li class="">
@@ -133,29 +122,54 @@
 
     <div id="indicator" class="content-regular">
         <ul>
-            <li><i class="bi bi-lightning-charge"></i>Power: <span id="power">0</span> MW</li>
+            <li><i class="bi bi-lightning-charge"></i>Power: <span id="power"></span> MW</li>
             <li id="f-stats-btn" class="hover point" title="Shortcut: I"><i class="bi bi-bar-chart-line"></i>Factory Stats</li>
         </ul>    
     </div>
 
+    <div id="tool-indicator" class="indicator full-opacity-delay">
+                Current Tool: <span id="tool-indicator-value">Move</span>
+            </div>
 
     <div id="factory-stats" class="hide-page-up">
+        <div id="close-f-stats" title="Close: Esc">
+            <i class="bi bi-x-lg" onclick="popUpPage('factory-stats')"></i>
+        </div>
         <div id="f-stats-content">
             <div class="content-light satisFont f-box">
                 Factory Stats
             </div>
             <div id="f-content" class="content-dark f-box">
                 <div class="f-head content-light">Input Resources</div>
-                <div id="f-in-res" class="f-cont content-regular">hello</div>
+                <div id="f-in-res" class="f-cont content-regular"></div>
 
                 <div class="f-head content-light">Output Rescources</div>
                 <div id="f-out-res" class="f-cont content-regular"></div>
                 
                 <div class="f-head content-light">Buildings</div>
-                <div id="f-build" class="f-cont content-regular"></div>
+                <div id="f-build" class="f-cont content-regular">
+                    <div>No buildings placed</div>
+                </div>
             </div>   
         </div>
              
+    </div>
+
+
+    <div id="settings-selector" class="full-b-dark full-opacity">
+        <div class="indicator">
+            Press a Key to set a new Keybind
+        </div>
+    </div>
+
+    <div id="settings-window" class="hide-page-up">
+        <div id="settings-content">
+            <div class="content-light satisFont s-head">Settings</div>
+            <div id="settings-menu" class="content-regular">
+                
+            </div>
+            
+        </div>
     </div>
 
     <script src="../js/controls.js"></script>
