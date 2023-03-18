@@ -2,11 +2,16 @@ let data
 const headings = ['Extraction','Production','Generators','Logistic','Extra']
 let buildings = []
 let maxId = 0
+let maxPortId = 0
 let operation = 'move'
 let mouseX
 let mouseY
 let setKeybinds = false
 let changeSetting = -1
+
+let fromPort = null
+let toPort = null
+
 let settings_Key = ['1','2','3','4','Escape','f','Delete','w','s','a','d']
 let settings_Name = ['Tool: Move', 'Tool: Select', 'Tool: Add', 'Tool: Delete', 'Open/Close Settings', 'Open/Close Factory Stats', 'Delete selected Building','Up','Down','Left','Right']
 
@@ -22,7 +27,6 @@ async function setUpWindow() {
     loadButtons()
     keybinds()
     setupKeybindSettings()
-    createLine(40,100,1500,500,'line')
 }
 
 async function fetchData() {
@@ -103,13 +107,20 @@ function keybinds() {
                     setOperation('delete')
                     break
                 case settings_Key[4]:    
-                    // leaves the factory stats              
-                    if (f_stats.classList.contains('hide-page-up')) {
-                        toggleSettingsWindow()
+                    // leaves the factory stats
+                    if (fromPort == null && toPort == null){              
+                        if (f_stats.classList.contains('hide-page-up')) {
+                            toggleSettingsWindow()
+                        }
+                        if (!f_stats.classList.contains('hide-page-up')) {
+                            f_stats.classList.add('hide-page-up')
+                        }                    
                     }
-                    if (!f_stats.classList.contains('hide-page-up')) {
-                        f_stats.classList.add('hide-page-up')
-                    }                    
+                    else {
+                        fromPort = null
+                        toPort = null
+                        document.getElementById('previewLine').style.display = 'none'
+                    }
                     break
 
                 case settings_Key[5]:
@@ -286,22 +297,31 @@ function addBuilding(machIndex, catIndex) {
     let bData = data.machines[bE.machIndex][headings[bE.machIndex]][bE.catIndex]
    
     for (let i = 0; i< parseInt(bData.conveyor_in);i++) {
-        bD.getElementsByClassName('portLine')[0].innerHTML += `<div class="inputPort port conveyor"></div>`
+        bD.getElementsByClassName('portLine')[0].innerHTML += `<div id="p${maxPortId}" class="inputPort port conveyor"></div>`
+        maxPortId++
     }
     for (let i = 0; i< parseInt(bData.fluid_in);i++) {
-        bD.getElementsByClassName('portLine')[0].innerHTML += `<div class="inputPort port fluid"></div>`
+        bD.getElementsByClassName('portLine')[0].innerHTML += `<div id="p${maxPortId}" class="inputPort port fluid"></div>`
+        maxPortId++
     }
     for (let i = 0; i< parseInt(bData.conveyor_out);i++) {
-        bD.getElementsByClassName('portLine')[1].innerHTML += `<div class="outputPort port conveyor"></div>`
+        bD.getElementsByClassName('portLine')[1].innerHTML += `<div id="p${maxPortId}" class="outputPort port conveyor"></div>`
+        maxPortId++
     }
     for (let i = 0; i< parseInt(bData.fluid_out);i++) {
-        bD.getElementsByClassName('portLine')[1].innerHTML += `<div class="outputPort port fluid"></div>`
+        bD.getElementsByClassName('portLine')[1].innerHTML += `<div id="p${maxPortId}" class="outputPort port fluid"></div>`
+        maxPortId++
     }
 
-
-
-
-
+    let ports = bD.getElementsByClassName('port')
+    for (let i = 0; i<ports.length; i++) {
+        /*
+        ports[i].addEventListener('click', function() {
+            setLinePoint(ports[i])
+        })
+        */
+        ports[i].setAttribute('onclick','setLinePoint(this)')
+    }
 
     maxId++
 
@@ -319,6 +339,59 @@ function removeBuilding() {
     synchFactoryStats()
 }
 
+
+function setLinePoint(port) {
+    if (port.classList.contains('inputPort')) {
+        toPort = port
+    } else if (port.classList.contains('outputPort')) {
+        fromPort = port
+    }
+    if (fromPort !== null && toPort !== null) {
+        document.getElementById('previewLine').style.display = 'none'
+        drawLine(fromPort, toPort)
+        fromPort = null
+        toPort = null
+    } 
+    else if (fromPort !== null) {
+        updateLinePosition(
+            fromPort.getBoundingClientRect().x+5,
+            fromPort.getBoundingClientRect().y+3.5, 
+            fromPort.getBoundingClientRect().x+5,
+            fromPort.getBoundingClientRect().y+3.5, 
+            'previewLine'
+        )
+
+        document.addEventListener('mousemove', (e) => {
+            updateLineOnMove(e, fromPort)
+        })
+        document.getElementById('previewLine').style.display = 'block'
+    } 
+    else if (toPort !== null) {
+        updateLinePosition(
+            toPort.getBoundingClientRect().x+5,
+            toPort.getBoundingClientRect().y+3.5, 
+            toPort.getBoundingClientRect().x+5,
+            toPort.getBoundingClientRect().y+3.5, 
+            'previewLine'
+        )
+
+        document.addEventListener('mousemove', (e) => {
+            updateLineOnMove(e,toPort)
+        })   
+        document.getElementById('previewLine').style.display = 'block' 
+    }
+}
+
+function drawLine(fromPort, toPort) {
+    if (document.getElementById(`${fromPort.id}_${toPort.id}`) == null){
+        document.getElementById('line-container').innerHTML += `<div id="${fromPort.id}_${toPort.id}" class="line"></div>`
+    }
+    updateLinePosition(fromPort.getBoundingClientRect().x+5,fromPort.getBoundingClientRect().y+3.5, toPort.getBoundingClientRect().x+5,toPort.getBoundingClientRect().y+3.5, `${fromPort.id}_${toPort.id}`)  
+}
+function updateLineOnMove(event, fromPort) {
+    updateLinePosition(fromPort.getBoundingClientRect().x+5.2,fromPort.getBoundingClientRect().y+4, event.clientX, event.clientY, `previewLine`)
+}
+
 setInterval(checkMoving(), 500)
 
 function checkMoving() {
@@ -327,9 +400,9 @@ function checkMoving() {
         for (let x = 0; x<selectedElements.length; x++) {
             let e = selectedElements[x]
             
-            e.style.setProperty("--x" ,(event.pageX - mouseX) + "px")
-            e.style.setProperty("--y" ,(event.pageY - mouseY) + "px")
-            buildings[e.id.substring(1)].updatePosition((event.pageX - mouseX), (event.pageX - mouseY))
+            e.style.setProperty("--x" ,(/*event.pageX*/event.clientX - mouseX) + "px")
+            e.style.setProperty("--y" ,(/*event.pageY*/event.clientY - mouseY) + "px")
+            buildings[e.id.substring(1)].updatePosition((/*event.pageX*/event.clientX - mouseX), (/*event.pageY*/event.clientY - mouseY))
             //console.log(buildings[e.id.substring(1)].x +":"+ buildings[e.id.substring(1)].y)
         }
         //console.log(buildings[selectedElements[0].id.substring(1)].x +":"+buildings[selectedElements[0].id.substring(1)].y)
@@ -451,7 +524,7 @@ function synchPropertiesByElement(element){
     document.getElementById('eff-t-in').value = b.efficiency
     synchInValueWithAnother('eff-t-in','eff-s-in')
 
-    console.log(document.getElementById('product').value)
+    //console.log(document.getElementById('product').value)
     document.getElementById('product').value = b.reciepie
 
     document.getElementById('fill-color').value = b.fillColor
@@ -566,7 +639,7 @@ function resetAllKeyBinds() {
 // settings end ---------------------------
 
 // calculate new line
-function createLine(x1,y1,x2,y2,lineID) {
+function updateLinePosition(x1,y1,x2,y2,lineID) {
     let distance = Math.sqrt( ((x1-x2) * (x1-x2)) + ((y1-y2) * (y1-y2)) )
     
     let xMid = (x1+x2)/2
