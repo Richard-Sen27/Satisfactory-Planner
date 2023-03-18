@@ -11,4 +11,4 @@ Current Features:
 Upcomming features:
 1. Lines to connect machines with each other (conveyor belts and fluid pipes)
 2. Calculating the total input and output resources
-3. and many as I get new ideas..
+3. and a lot of other stuff as I get new ideas..
